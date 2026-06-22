@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR Operating Manual — Galaxsys</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ECEEEA; --surface:#FFFFFF; --surface-2:#F5F6F3;
+    --ink:#15181E; --ink-soft:#4A525E; --ink-faint:#828B97;
+    --line:#DCDFD9; --line-strong:#C7CCC4;
+    --teal-deep:#0E2A30; --teal:#13796D; --teal-bright:#16877A; --teal-soft:#DDEFE9;
+    --amber:#B57A22; --amber-soft:#F4E7CF; --clay:#A8442F; --clay-soft:#F2DBD3;
+    --on-deep:#E7F0EC; --on-deep-soft:#9FBDB5;
+    --shadow:0 1px 2px rgba(14,42,48,.05),0 8px 28px rgba(14,42,48,.07);
+  }
+  [data-theme="dark"]{
+    --paper:#0D1014; --surface:#161A21; --surface-2:#1C212A;
+    --ink:#ECEFF2; --ink-soft:#A6AFBB; --ink-faint:#6B7480;
+    --line:#262C36; --line-strong:#333B46;
+    --teal-deep:#0A1F23; --teal:#2BAE9C; --teal-bright:#34BEAB; --teal-soft:#10302B;
+    --amber:#D99A3F; --amber-soft:#2C2415; --clay:#CB6047; --clay-soft:#2E1A14;
+    --on-deep:#E7F0EC; --on-deep-soft:#86A39B;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    transition:background .3s,color .3s;
+  }
+  .mono{font-family:'JetBrains Mono',monospace}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    background:var(--teal-deep);color:var(--on-deep);
+    position:relative;overflow:hidden;
+    border-bottom:1px solid var(--teal-deep);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(circle at 88% -10%,rgba(43,174,156,.20),transparent 42%),
+      repeating-linear-gradient(90deg,rgba(255,255,255,.03) 0 1px,transparent 1px 56px);
+  }
+  .hero-inner{position:relative;z-index:1;padding:40px 24px 46px;max-width:1080px;margin:0 auto}
+  .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:'JetBrains Mono',monospace;
+    font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--on-deep-soft)}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--teal-bright);
+    box-shadow:0 0 0 4px rgba(43,174,156,.18)}
+  .theme-btn{
+    background:rgba(255,255,255,.06);color:var(--on-deep);border:1px solid rgba(255,255,255,.14);
+    border-radius:999px;padding:8px 16px;font-family:'JetBrains Mono',monospace;font-size:12px;
+    letter-spacing:.06em;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .2s}
+  .theme-btn:hover{background:rgba(255,255,255,.12)}
+  .hero h1{
+    font-family:'Archivo',sans-serif;font-weight:800;font-stretch:expanded;
+    font-size:clamp(34px,6.4vw,68px);line-height:.98;letter-spacing:-.02em;
+    margin:30px 0 0;color:#fff;max-width:14ch;
+  }
+  .hero .sub{margin-top:18px;font-size:clamp(16px,2vw,19px);max-width:60ch;color:var(--on-deep)}
+  .hero .meta{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.05em;
+    padding:6px 12px;border-radius:6px;background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.13);color:var(--on-deep)}
+
+  /* ---------- TABS ---------- */
+  nav.tabs{position:sticky;top:0;z-index:40;background:var(--paper);
+    border-bottom:1px solid var(--line);box-shadow:0 1px 0 var(--line);transition:background .3s}
+  .tabs-inner{max-width:1080px;margin:0 auto;padding:12px 24px;display:flex;gap:8px;overflow-x:auto}
+  .tab{
+    appearance:none;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.03em;
+    color:var(--ink-soft);padding:11px 17px;white-space:nowrap;position:relative;
+    background:var(--surface);border:1px solid var(--line-strong);border-radius:11px;
+    transition:color .2s,background .2s,border-color .2s,box-shadow .2s}
+  .tab:hover{color:var(--ink);border-color:var(--teal);background:var(--surface-2)}
+  .tab.active{color:#fff;background:var(--teal);border-color:var(--teal);
+    box-shadow:0 3px 12px rgba(19,121,109,.28)}
+  [data-theme="dark"] .tab.active{color:#08221E;box-shadow:0 3px 14px rgba(43,174,156,.32)}
+  .tab:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+  main{padding:48px 0 90px}
+  .panel{display:none}
+  .panel.active{display:block;animation:fade .35s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--teal);font-weight:600}
+  h2.sec{font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(26px,3.6vw,38px);
+    letter-spacing:-.015em;margin:10px 0 14px;line-height:1.05}
+  .lead{font-size:17px;color:var(--ink-soft);max-width:68ch}
+
+  /* ---------- MANDATE ---------- */
+  .mandate-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+  @media(max-width:760px){.mandate-grid{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow)}
+  .pad{padding:24px 26px}
+  .card h3{font-family:'Archivo',sans-serif;font-weight:700;font-size:19px;letter-spacing:-.01em;
+    margin-bottom:10px;display:flex;align-items:center;gap:9px}
+  .card h3 .num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);
+    border:1px solid var(--line-strong);border-radius:6px;padding:3px 7px;font-weight:600}
+  .card p{color:var(--ink-soft);font-size:15px}
+  ul.ticks{list-style:none;margin-top:6px}
+  ul.ticks li{position:relative;padding-left:24px;margin:9px 0;color:var(--ink-soft);font-size:15px}
+  ul.ticks li::before{content:"";position:absolute;left:0;top:9px;width:10px;height:10px;
+    border-radius:3px;background:var(--teal-soft);border:1.5px solid var(--teal)}
+  ul.crosses li::before{background:var(--clay-soft);border-color:var(--clay);border-radius:50%}
+  .span2{grid-column:1/-1}
+  .principle{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-top:1px solid var(--line)}
+  .principle:first-of-type{border-top:none}
+  .principle .k{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--teal);
+    font-weight:600;min-width:34px}
+  .principle .v b{color:var(--ink)}
+  .principle .v{color:var(--ink-soft);font-size:15px}
+
+  /* ---------- STATUS BOARD ---------- */
+  .board-head{display:flex;justify-content:space-between;align-items:flex-end;
+    flex-wrap:wrap;gap:18px;margin-top:30px}
+  .progress-wrap{min-width:240px;flex:1;max-width:420px}
+  .progress-top{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;
+    font-size:12px;color:var(--ink-faint);margin-bottom:7px}
+  .progress-top b{color:var(--ink)}
+  .bar{height:8px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--teal-bright));
+    border-radius:99px;transition:width .5s ease}
+  .reset{background:none;border:1px solid var(--line-strong);color:var(--ink-faint);
+    border-radius:8px;padding:9px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;
+    cursor:pointer;transition:.2s}
+  .reset:hover{color:var(--clay);border-color:var(--clay)}
+
+  .func-list{margin-top:24px;display:flex;flex-direction:column;gap:12px}
+  .func{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    box-shadow:var(--shadow)}
+  .func-head{display:flex;align-items:center;gap:16px;padding:18px 22px;cursor:pointer;
+    user-select:none;transition:background .2s}
+  .func-head:hover{background:var(--surface-2)}
+  .pip{width:13px;height:13px;border-radius:50%;flex-shrink:0;background:var(--clay);
+    box-shadow:0 0 0 4px var(--clay-soft);transition:.3s}
+  .pip.partial{background:var(--amber);box-shadow:0 0 0 4px var(--amber-soft)}
+  .pip.done{background:var(--teal-bright);box-shadow:0 0 0 4px var(--teal-soft)}
+  .func-no{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink-faint);font-weight:600}
+  .func-title{font-family:'Archivo',sans-serif;font-weight:700;font-size:17.5px;letter-spacing:-.01em;flex:1}
+  .func-count{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-faint)}
+  .chev{transition:transform .3s;color:var(--ink-faint);flex-shrink:0}
+  .func.open .chev{transform:rotate(180deg)}
+  .func-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+  .func.open .func-body{max-height:1600px}
+  .func-inner{padding:4px 22px 22px;border-top:1px solid var(--line)}
+  .why{color:var(--ink-soft);font-size:15px;margin:16px 0 18px;padding-left:14px;
+    border-left:2px solid var(--teal)}
+  .act-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px}
+  .checks{display:flex;flex-direction:column;gap:2px}
+  label.chk{display:flex;gap:12px;align-items:flex-start;padding:9px 10px;border-radius:9px;
+    cursor:pointer;transition:background .15s}
+  label.chk:hover{background:var(--surface-2)}
+  label.chk input{appearance:none;width:19px;height:19px;border:1.6px solid var(--line-strong);
+    border-radius:5px;flex-shrink:0;margin-top:2px;cursor:pointer;position:relative;transition:.15s}
+  label.chk input:checked{background:var(--teal);border-color:var(--teal)}
+  label.chk input:checked::after{content:"";position:absolute;left:5px;top:1.5px;width:5px;height:10px;
+    border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+  label.chk span{font-size:14.5px;color:var(--ink-soft);transition:.15s}
+  label.chk input:checked + span{color:var(--ink-faint);text-decoration:line-through}
+  .kpi-row{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .kpi-row .lab{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--teal);margin-right:4px}
+  .kpi{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--surface-2);
+    border:1px solid var(--line);border-radius:6px;padding:5px 9px;color:var(--ink-soft)}
+
+  /* ---------- CADENCE ---------- */
+  .cad-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:30px}
+  @media(max-width:920px){.cad-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.cad-grid{grid-template-columns:1fr}}
+  .cad{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 18px;
+    box-shadow:var(--shadow)}
+  .cad-h{font-family:'Archivo',sans-serif;font-weight:800;font-size:15px;letter-spacing:.02em;
+    text-transform:uppercase;color:var(--teal);margin-bottom:4px}
+  .cad-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-faint);margin-bottom:14px}
+  .cad ul{list-style:none}
+  .cad li{font-size:14px;color:var(--ink-soft);padding:9px 0;border-top:1px solid var(--line);line-height:1.45}
+  .cad li:first-child{border-top:none;padding-top:0}
+
+  /* ---------- ACTIVATION ---------- */
+  .phases{margin-top:30px;display:flex;flex-direction:column;gap:16px}
+  .phase{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);display:grid;grid-template-columns:200px 1fr}
+  @media(max-width:720px){.phase{grid-template-columns:1fr}}
+  .phase-side{background:var(--teal-deep);color:var(--on-deep);padding:24px 22px;
+    border-radius:14px 0 0 14px}
+  @media(max-width:720px){.phase-side{border-radius:14px 14px 0 0}}
+  .phase-side .days{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;
+    color:var(--on-deep-soft)}
+  .phase-side h3{font-family:'Archivo',sans-serif;font-weight:800;font-size:22px;margin-top:8px;
+    color:#fff;line-height:1.05}
+  .phase-side .goal{margin-top:12px;font-size:13.5px;color:var(--on-deep)}
+  .phase-main{padding:24px 26px}
+  .phase-main ul{list-style:none}
+  .phase-main li{position:relative;padding-left:26px;margin:11px 0;color:var(--ink-soft);font-size:15px}
+  .phase-main li::before{content:counter(step);counter-increment:step;position:absolute;left:0;top:1px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--teal);
+    width:18px;height:18px;border:1px solid var(--teal);border-radius:5px;display:flex;
+    align-items:center;justify-content:center}
+  .phase-main ul{counter-reset:step}
+
+  footer{border-top:1px solid var(--line);margin-top:20px}
+  .foot{max-width:1080px;margin:0 auto;padding:26px 24px;display:flex;justify-content:space-between;
+    flex-wrap:wrap;gap:12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-faint)}
+
+  /* ---------- PILLARS ---------- */
+  .pillars{margin-top:30px;display:flex;flex-direction:column;gap:18px}
+  .pillar{background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);overflow:hidden}
+  .pillar-top{padding:24px 26px 0;display:flex;justify-content:space-between;
+    align-items:flex-start;gap:18px;flex-wrap:wrap}
+  .pillar-id{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;
+    color:var(--teal);font-weight:600}
+  .pillar h3{font-family:'Archivo',sans-serif;font-weight:800;font-size:23px;letter-spacing:-.015em;
+    margin-top:6px;line-height:1.05}
+  .pillar-cnt{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-faint);
+    border:1px solid var(--line-strong);border-radius:7px;padding:6px 11px;white-space:nowrap}
+  .pillar-cnt b{color:var(--teal-bright)}
+  .stage-flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;padding:18px 26px 4px}
+  .stage{display:flex;align-items:center;gap:9px}
+  .stage .sn{width:26px;height:26px;border-radius:8px;flex-shrink:0;display:flex;
+    align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;
+    font-weight:600;background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal)}
+  .stage .st{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.04em;color:var(--ink)}
+  .stage-arrow{color:var(--ink-faint);margin:0 12px;flex-shrink:0}
+  .stage-loop{display:inline-flex;align-items:center;gap:6px;margin-left:14px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);
+    background:var(--teal-soft);border:1px solid var(--teal);border-radius:99px;padding:4px 11px}
+  .pillar-inner{padding:8px 26px 24px}
+  .pillar .why{margin:6px 0 18px}
+  .grp-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--teal);margin:16px 0 6px;font-weight:600}
+  .grp-label:first-of-type{margin-top:4px}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="topbar">
+      <div class="brand"><span class="dot"></span> Galaxsys · People Function</div>
+      <button class="theme-btn" id="themeBtn"><span id="themeIcon">◑</span><span id="themeTxt">Dark</span></button>
+    </div>
+    <h1>The HR Operating Manual</h1>
+    <p class="sub">What an HR Manager is accountable for, function by function — with the activities, operating rhythm, and 90-day turnaround plan that make the role a proactive system, not an inbox.</p>
+    <div class="meta">
+      <span class="chip">iGaming · Game Company</span>
+      <span class="chip">12 Core Functions</span>
+      <span class="chip">Daily → Annual Cadence</span>
+      <span class="chip">Checklists Save Locally</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner" id="tabBar">
+    <button class="tab active" data-tab="mandate">01 · The Mandate</button>
+    <button class="tab" data-tab="functions">02 · 12 Functions</button>
+    <button class="tab" data-tab="cadence">03 · Operating Cadence</button>
+    <button class="tab" data-tab="activation">04 · 90-Day Activation</button>
+    <button class="tab" data-tab="focus">05 · Focus Areas</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- MANDATE -->
+  <section class="panel active" id="mandate">
+    <div class="eyebrow">The Mandate</div>
+    <h2 class="sec">HR is a business function — measured, proactive, owned.</h2>
+    <p class="lead">In a company that ships games into regulated casino markets, people are the entire product. The HR Manager exists to make sure the company can <b>hire, grow, keep, and protect</b> the talent that builds and sells those games — and to do it on a visible cadence with numbers attached. The role is not reactive paperwork. It owns outcomes.</p>
+
+    <div class="mandate-grid">
+      <div class="card pad">
+        <h3><span class="num">DOES</span> What this role owns</h3>
+        <ul class="ticks">
+          <li>Whether critical roles are filled fast and well</li>
+          <li>Whether new hires are productive and stay past 90 days</li>
+          <li>Whether people have goals, feedback, and a path to grow</li>
+          <li>Whether pay is fair, competitive, and defensible</li>
+          <li>Whether the company is engaged, healthy, and not burning out on release crunches</li>
+          <li>Whether the company is legally and license-compliant on people matters</li>
+          <li>Whether leadership has accurate people data to decide with</li>
+        </ul>
+      </div>
+      <div class="card pad">
+        <h3><span class="num">NOT</span> What this role is not</h3>
+        <ul class="ticks crosses">
+          <li>Not "the person who does contracts when asked"</li>
+          <li>Not waiting for problems to walk in the door</li>
+          <li>Not invisible between hiring requests</li>
+          <li>Not optional reporting — every function carries a metric</li>
+          <li>Not a cost centre with no targets</li>
+          <li>Not separate from the release roadmap and commercial goals</li>
+        </ul>
+      </div>
+      <div class="card pad span2">
+        <h3><span class="num">RUN</span> Operating principles</h3>
+        <div class="principle"><span class="k">P1</span><span class="v"><b>Proactive, not reactive.</b> The calendar drives the work — surveys, reviews, planning and reporting happen on schedule whether or not anyone asks.</span></div>
+        <div class="principle"><span class="k">P2</span><span class="v"><b>Everything is measured.</b> Each function below has KPIs. If it isn't tracked, it isn't managed.</span></div>
+        <div class="principle"><span class="k">P3</span><span class="v"><b>Tied to the roadmap.</b> Hiring and capacity plans follow the game-release schedule and commercial targets, not the other way around.</span></div>
+        <div class="principle"><span class="k">P4</span><span class="v"><b>Visible to leadership.</b> A monthly people dashboard reaches the leadership team without being requested.</span></div>
+        <div class="principle"><span class="k">P5</span><span class="v"><b>Builds to scale.</b> Every people system — hiring, onboarding, reviews, records — is documented and repeatable, so it runs the same way as the company grows instead of living in one person's head.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNCTIONS -->
+  <section class="panel" id="functions">
+    <div class="eyebrow">The 12 Functions</div>
+    <h2 class="sec">Every duty the role must run.</h2>
+    <p class="lead">Each function lists the concrete activities that should be happening. Tick items as they go live — the status pip turns from <b style="color:var(--clay)">neglected</b> → <b style="color:var(--amber)">in progress</b> → <b style="color:var(--teal-bright)">operating</b>. Progress is saved in this browser.</p>
+
+    <div class="board-head">
+      <div class="progress-wrap">
+        <div class="progress-top"><span>Functions operating</span><span><b id="pCount">0</b> / <span id="pTotal">0</span> activities</span></div>
+        <div class="bar"><i id="pBar"></i></div>
+      </div>
+      <button class="reset" id="resetBtn">Reset all progress</button>
+    </div>
+
+    <div class="func-list" id="funcList"></div>
+  </section>
+
+  <!-- CADENCE -->
+  <section class="panel" id="cadence">
+    <div class="eyebrow">Operating Cadence</div>
+    <h2 class="sec">There is always something to do today.</h2>
+    <p class="lead">The clearest answer to an inactive HR function is a rhythm. This is the recurring calendar the role runs — nothing here waits to be requested.</p>
+    <div class="cad-grid" id="cadGrid"></div>
+  </section>
+
+  <!-- ACTIVATION -->
+  <section class="panel" id="activation">
+    <div class="eyebrow">90-Day Activation</div>
+    <h2 class="sec">Turning the role from passive to operating.</h2>
+    <p class="lead">If the function has been dormant, this is the turnaround sequence — audit first, build the system second, prove it third. Each phase ends with a deliverable leadership can check.</p>
+    <div class="phases" id="phases"></div>
+  </section>
+
+  <!-- FOCUS AREAS -->
+  <section class="panel" id="focus">
+    <div class="eyebrow">Focus Areas</div>
+    <h2 class="sec">Three pillars the role owns end-to-end.</h2>
+    <p class="lead">These run across all twelve functions — and in a company where four very different teams must move as one to ship games into regulated markets, they're where an HR Manager earns their seat. Each is a working cycle, not a one-off. Tick the activities as they go live.</p>
+    <div class="pillars" id="pillars"></div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot">
+    <span>HR Operating Manual · Galaxsys People Function</span>
+    <span id="stamp"></span>
+  </div>
+</footer>
+
+<script>
+/* ---------------- DATA ---------------- */
+const FUNCTIONS = [
+  {t:"Workforce Planning & HR Strategy",
+   why:"Make sure the company always has the right people for the release roadmap — and a backup for every role that, if it vanished, would stall a launch.",
+   acts:["Maintain a rolling 12-month headcount plan tied to the game-release roadmap and commercial targets","Map critical roles (game maths / RTP designers, real-time backend, certification & compliance, key account managers) and single points of failure","Build named succession / backup coverage for every critical role","Run a quarterly workforce review with leadership","Keep the org chart, role definitions and career ladders current"],
+   kpis:["Vacancy aging","% critical roles with a named successor","Plan-vs-actual headcount"]},
+  {t:"Talent Acquisition & Recruitment",
+   why:"Hard iGaming roles are slow and expensive to fill. The role owns a pipeline that is warm before the vacancy opens.",
+   acts:["Own job descriptions and the requisition approval workflow with hiring managers","Maintain warm talent pools for hard-to-fill roles; don't start from zero each time","Manage sourcing channels, agencies and the employee referral programme","Run a structured interview process with scorecards and panels","Coordinate technical assessments (game maths, code) and final leadership rounds","Manage offers, negotiation, and background / fit-and-proper checks","Run employer branding — careers page, LinkedIn, conference presence (SiGMA, ICE, SBC)"],
+   kpis:["Time-to-hire","Offer-accept rate","90-day quality-of-hire","Cost-per-hire"]},
+  {t:"Onboarding & Integration",
+   why:"A new hire's first 90 days decide whether they become productive or become attrition. This is engineered, not improvised.",
+   acts:["Run pre-boarding — equipment, accounts and access ready before day one","Build a 30/60/90 onboarding plan per role with the hiring manager","Deliver mandatory inductions: company, product, security/data, code of conduct, responsible-gambling awareness","Assign an onboarding buddy","Run 30/60/90 check-ins and make a clear probation decision"],
+   kpis:["Onboarding completion %","New-hire 90-day retention","Time-to-productivity","New-hire satisfaction"]},
+  {t:"Performance Management",
+   why:"People need goals, honest feedback, and a fair process when things go wrong — running on a cycle, not ad hoc.",
+   acts:["Run the goal / OKR cycle, linked to company objectives","Run quarterly check-ins and the annual review, with calibration sessions","Enable managers on giving feedback and running effective 1:1s","Handle underperformance fairly — documented PIPs with clear criteria","Tie recognition to demonstrated performance"],
+   kpis:["Review completion %","% staff with current goals","Calibration / distribution health","PIP outcomes"]},
+  {t:"Learning, Development & AI Reskilling",
+   why:"In a company mandating AI adoption, the people function owns the reskilling that makes that mandate real per department.",
+   acts:["Run a training-needs analysis per department","Maintain individual development plans for staff","Lead the AI-adoption reskilling programme and track tool proficiency by team","Manage the L&D budget, external courses, certifications and conference attendance","Run internal knowledge-sharing, mentoring and leadership development"],
+   kpis:["Training hours / employee","IDP coverage %","AI-tool proficiency by dept","Internal-fill rate"]},
+  {t:"Compensation, Benefits & Rewards",
+   why:"Pay must be competitive enough to keep top builders and fair enough to defend. The role keeps it both.",
+   acts:["Maintain salary bands benchmarked to the iGaming / tech market","Run the annual review and promotion calibration cycle","Administer bonuses and incentives tied to releases and revenue","Administer benefits and manage renewals","Run periodic pay-equity audits and keep the comp framework transparent"],
+   kpis:["Pay-band compliance","Comp-ratio","Regretted-attrition of high performers","Benefits utilisation"]},
+  {t:"Employee Engagement & Culture",
+   why:"Engagement is measured and acted on, not assumed. Surveys without follow-through make things worse.",
+   acts:["Run a quarterly pulse and an annual engagement survey — then publish action plans","Maintain and actively communicate company values and culture","Plan team events, recognition programmes and internal comms","Run town halls and feedback channels, and close the loop on what's raised","Run stay interviews and support internal mobility"],
+   kpis:["eNPS / engagement score","Survey participation rate","Action-plan completion","Voluntary attrition"]},
+  {t:"Wellbeing & Burnout Prevention",
+   why:"Release crunches and a high-pressure industry make burnout a real attrition driver. The role watches for it actively.",
+   acts:["Monitor workload and overtime around release crunches; flag burnout risk early","Run wellbeing programmes — EAP, mental-health support, flexible / remote policies","Promote healthy-work norms and a responsible internal culture","Manage absence, leave and return-to-work support"],
+   kpis:["Absenteeism","Overtime trend","EAP usage","Wellbeing survey score"]},
+  {t:"Compliance, Legal & iGaming Obligations",
+   why:"In a licensed industry, people-side compliance protects the company's ability to operate. This is non-negotiable.",
+   acts:["Keep employment contracts, policies and the handbook current with labour law in every jurisdiction you employ in","Run background / fit-and-proper / integrity checks where licensing requires them","Protect employee data (GDPR) and enforce confidentiality / IP agreements covering game maths and source","Maintain code of conduct, anti-harassment, conflict-of-interest and responsible-gambling staff policies","Support gaming-license personnel disclosures and regulator requests","Run grievance and disciplinary procedures with proper documentation"],
+   kpis:["Policy acknowledgment %","Audit findings","Mandatory-training completion","Case-resolution time"]},
+  {t:"HR Operations & Administration",
+   why:"The unglamorous backbone — records, payroll inputs and requests handled accurately and on time, every time.",
+   acts:["Maintain the HRIS / employee records as the single source of truth","Manage contracts, amendments and employment letters","Coordinate payroll inputs and track leave / attendance accurately","Handle HR requests and tickets to a published SLA","Manage HR vendors — recruiters, benefits, training providers"],
+   kpis:["Data accuracy","Request SLA adherence","Payroll error rate","Process cycle time"]},
+  {t:"Offboarding & Retention",
+   why:"Why people leave is the cheapest data you'll ever get — and exits in a company carry IP-security risk.",
+   acts:["Conduct exit interviews and analyse attrition drivers","Manage resignations, notice, knowledge transfer and timely access revocation","Run retention interventions for at-risk talent","Keep alumni relationships warm for a boomerang pipeline"],
+   kpis:["Voluntary vs regretted attrition","Exit-interview completion","Knowledge-transfer completion"]},
+  {t:"HR Analytics & Reporting",
+   why:"Leadership should never have to ask how the workforce is doing — the numbers arrive on schedule.",
+   acts:["Publish a monthly people dashboard to leadership: headcount, attrition, hiring, cost, engagement","Track every function's KPIs and trend them over time","Support workforce-cost reporting and budgeting","Flag risks early — attrition risk, hiring gaps, capacity shortfalls"],
+   kpis:["Report timeliness","Data quality","% people-decisions backed by data"]}
+];
+
+const CADENCE = [
+  {h:"Daily",s:"Keep things moving",items:["Clear the HR inbox and request queue","Keep candidates warm — respond, schedule, advance","Support managers on live people questions","Confirm any new joiner starting is fully set up"]},
+  {h:"Weekly",s:"Stay aligned",items:["Recruitment pipeline review with hiring managers","1:1 with leadership","New-hire onboarding check-ins","Sweep and clear overdue actions"]},
+  {h:"Monthly",s:"Report & control",items:["Publish the people dashboard to leadership","Run the payroll input cycle accurately","Review engagement pulse signals","Check policy & mandatory-training compliance","Track the HR budget"]},
+  {h:"Quarterly",s:"Plan & develop",items:["Run the performance check-in cycle","Review the workforce plan with leadership","Run the engagement survey + action plan","Scan the comp market","Refresh the succession review"]},
+  {h:"Annual",s:"Strategise",items:["Annual performance & comp review cycle","Salary benchmarking refresh","Full engagement survey","Policy & handbook refresh","HR strategy, budget & training plan for the year"]}
+];
+
+const PHASES = [
+  {d:"Days 1–30",t:"Audit & Stabilise",g:"Know exactly where the function stands and fix anything urgent.",
+   items:["Inventory the current state: records, contracts, open roles, policies, compliance gaps","Meet every people manager 1:1 to surface live issues","Fix urgent compliance and contract gaps first","Publish an HR request channel with a clear SLA","Stand up the people dashboard skeleton"]},
+  {d:"Days 31–60",t:"Build the System",g:"Put the recurring machinery in place so the function runs on a calendar.",
+   items:["Stand up the recruitment pipeline and a job-description library","Build the standard 30/60/90 onboarding plan","Set the performance-cycle calendar for the year","Launch the first engagement pulse","Refresh core policies and draft salary bands"]},
+  {d:"Days 61–90",t:"Operate & Prove",g:"Run the system live and show leadership it's working.",
+   items:["Publish the first full monthly people dashboard","Run the first engagement survey and share the action plan","Complete onboarding for all recent hires","Present the 6-month workforce plan to leadership","Agree KPIs and targets for every function"]}
+];
+
+const PILLARS = [
+  {t:"Company Culture",
+   stages:["Define","Build","Embed","Sustain"],
+   why:"Design, tech, product and commercial each pull a different way under release pressure, and culture is what holds them on one line. It doesn't happen by accident — HR actively builds it: naming what the company stands for, then constructing the rituals, recognition and habits that make it real day to day.",
+   groups:[
+     {l:"Define",acts:[
+       "Articulate the culture you actually want and codify the values in plain language, with the observable behaviours that prove each one",
+       "Be explicit about what makes this company different to work at, rather than leaving it to chance"]},
+     {l:"Build",acts:[
+       "Run a recognition programme — peer-to-peer and milestone — that visibly rewards the behaviours you want repeated",
+       "Keep a calendar of rituals that bind people together: town halls, game demos, launch celebrations, anniversaries, socials",
+       "Build a culture-immersion track into onboarding so new hires absorb how things work here from day one",
+       "Stand up culture champions or a people committee so building culture isn't carried by HR alone",
+       "Communicate the values constantly — internal comms, leadership storytelling, and celebrating wins in the open"]},
+     {l:"Embed",acts:[
+       "Add a culture-add stage to every interview loop, so values are hired for, not hoped for",
+       "Tie recognition and performance reviews to demonstrated values",
+       "Make leaders accountable for culture — it sits in their goals and they model it daily",
+       "Equip managers to reinforce the culture in everyday 1:1s"]},
+     {l:"Sustain",acts:[
+       "Maintain cohesion across remote and distributed teams — and protect it hardest under release crunch",
+       "Protect psychological safety so people raise problems, including responsible-gaming and ethics concerns, early",
+       "Own diversity & inclusion with concrete actions, not statements",
+       "Track culture in every engagement survey, then act on the results and iterate"]}
+   ],
+   signals:["Values-aligned hire %","Culture score (survey)","Cross-team collaboration sentiment","eNPS"]},
+
+  {t:"The Feedback Loop",
+   stages:["Capture","Analyse","Act","Close"],
+   loop:true,
+   why:"Feedback only builds trust if the loop is closed. A survey that leads to nothing does more damage than no survey at all. HR owns the full circuit — capturing the signal, turning it into action, and visibly reporting back what changed.",
+   groups:[
+     {l:"Capture",acts:[
+       "Run multiple listening channels: pulse surveys, the annual engagement survey, skip-levels, and an anonymous suggestion channel",
+       "Build feedback into the lifecycle: 30/60/90 new-hire feedback, stay interviews, exit interviews",
+       "Enable continuous manager↔employee feedback through structured 1:1s — not just the annual review",
+       "Run 360 feedback for managers and leaders"]},
+     {l:"Analyse",acts:[
+       "Turn raw feedback into themes and trends, segmented by team and tenure",
+       "Separate signal from noise and track sentiment over time"]},
+     {l:"Act",acts:[
+       "Convert the top themes into owned action plans with named owners and deadlines",
+       "Feed insights into workforce, comp, wellbeing and development decisions"]},
+     {l:"Close",acts:[
+       "Publish \u201cyou said / we did\u201d — visibly report back what changed and why",
+       "Report participation and follow-through to leadership every month"]}
+   ],
+   signals:["Participation rate","Action-plan completion","\u201cFeedback acted on\u201d score","Signal-to-action time"]},
+
+  {t:"Effective Resource Allocation",
+   stages:["Plan","Match","Balance","Reallocate"],
+   why:"People are the company's most expensive and most constrained resource. HR makes sure the right people are on the highest-value work, and that capacity follows the release roadmap — not the loudest request in the room.",
+   groups:[
+     {l:"Plan",acts:[
+       "Forecast capacity against the game-release roadmap and commercial priorities, not ad-hoc demand",
+       "Maintain a skills / capability inventory so you know what you actually have"]},
+     {l:"Match",acts:[
+       "Deploy the right person to the right role and project; surface and resolve mismatches",
+       "Make build-vs-hire-vs-contract decisions deliberately for each gap",
+       "Prioritise internal mobility before external hiring where the skill already exists in-house"]},
+     {l:"Balance",acts:[
+       "Balance workload across teams to prevent burnout-driven attrition during crunches",
+       "Monitor over- and under-utilisation and manage the bench",
+       "Allocate the L&D budget to the highest-leverage skills (e.g. the AI mandate) rather than spreading it thin"]},
+     {l:"Reallocate",acts:[
+       "Move people and budget as priorities shift between releases",
+       "Track cost-per-outcome and flag where spend isn't returning value",
+       "Manage HR's own spend deliberately — referral vs agency, tooling, training"]}
+   ],
+   signals:["Utilisation rate","Internal-fill rate","Time-to-staff a project","Workforce cost vs plan","Overload-driven attrition"]}
+];
+
+/* ---------------- RENDER ---------------- */
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,40);
+
+const funcList = document.getElementById('funcList');
+FUNCTIONS.forEach((f,i)=>{
+  const id = 'fn'+i;
+  const acts = f.acts.map((a,j)=>{
+    const k = id+'-'+j;
+    return `<label class="chk"><input type="checkbox" data-fn="${id}" id="${k}"><span>${a}</span></label>`;
+  }).join('');
+  const kpis = f.kpis.map(k=>`<span class="kpi">${k}</span>`).join('');
+  const el = document.createElement('div');
+  el.className='func'; el.id=id;
+  el.innerHTML = `
+    <div class="func-head" data-toggle="${id}">
+      <span class="pip" id="pip-${id}"></span>
+      <span class="func-no">F${String(i+1).padStart(2,'0')}</span>
+      <span class="func-title">${f.t}</span>
+      <span class="func-count" id="cnt-${id}">0/${f.acts.length}</span>
+      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="func-body"><div class="func-inner">
+      <p class="why">${f.why}</p>
+      <div class="act-label">Activities to run</div>
+      <div class="checks">${acts}</div>
+      <div class="kpi-row"><span class="lab">Track</span>${kpis}</div>
+    </div></div>`;
+  funcList.appendChild(el);
+});
+
+const cadGrid = document.getElementById('cadGrid');
+CADENCE.forEach(c=>{
+  const items = c.items.map(x=>`<li>${x}</li>`).join('');
+  cadGrid.insertAdjacentHTML('beforeend',
+    `<div class="cad"><div class="cad-h">${c.h}</div><div class="cad-sub">${c.s}</div><ul>${items}</ul></div>`);
+});
+
+const phasesEl = document.getElementById('phases');
+PHASES.forEach((p,i)=>{
+  const items = p.items.map(x=>`<li>${x}</li>`).join('');
+  phasesEl.insertAdjacentHTML('beforeend',
+    `<div class="phase"><div class="phase-side"><div class="days">PHASE ${i+1} · ${p.d}</div><h3>${p.t}</h3><div class="goal">${p.g}</div></div>
+     <div class="phase-main"><ul>${items}</ul></div></div>`);
+});
+
+const pillarsEl = document.getElementById('pillars');
+PILLARS.forEach((p,i)=>{
+  const id='pl'+i;
+  let actIdx=0;
+  const stageFlow = p.stages.map((s,j)=>{
+    const arrow = j<p.stages.length-1 ? `<svg class="stage-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>` : '';
+    return `<span class="stage"><span class="sn">${j+1}</span><span class="st">${s}</span></span>${arrow}`;
+  }).join('');
+  const loop = p.loop ? `<span class="stage-loop">↺ close the loop</span>` : '';
+  let total=0;
+  const groups = p.groups.map(g=>{
+    const checks = g.acts.map(a=>{
+      const k=id+'-'+(actIdx++); total++;
+      return `<label class="chk"><input type="checkbox" data-pl="${id}" id="${k}"><span>${a}</span></label>`;
+    }).join('');
+    return `<div class="grp-label">${g.l}</div><div class="checks">${checks}</div>`;
+  }).join('');
+  const signals = p.signals.map(s=>`<span class="kpi">${s}</span>`).join('');
+  pillarsEl.insertAdjacentHTML('beforeend',
+   `<div class="pillar" id="${id}" data-total="${total}">
+      <div class="pillar-top">
+        <div><div class="pillar-id">PILLAR ${String.fromCharCode(65+i)}</div><h3>${p.t}</h3></div>
+        <span class="pillar-cnt"><b id="plc-${id}">0</b> / ${total} live</span>
+      </div>
+      <div class="stage-flow">${stageFlow}${loop}</div>
+      <div class="pillar-inner">
+        <p class="why">${p.why}</p>
+        ${groups}
+        <div class="kpi-row"><span class="lab">Signals</span>${signals}</div>
+      </div>
+    </div>`);
+});
+
+/* ---------------- TABS ---------------- */
+document.getElementById('tabBar').addEventListener('click',e=>{
+  const b = e.target.closest('.tab'); if(!b) return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  b.classList.add('active');
+  document.getElementById(b.dataset.tab).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+/* ---------------- ACCORDION ---------------- */
+funcList.addEventListener('click',e=>{
+  const h = e.target.closest('.func-head'); if(!h) return;
+  document.getElementById(h.dataset.toggle).classList.toggle('open');
+});
+
+/* ---------------- CHECKLIST + PERSISTENCE ---------------- */
+const KEY='galaxsys-hr-manual-v1';
+let saved={};
+try{ saved=JSON.parse(localStorage.getItem(KEY))||{} }catch(e){ saved={} }
+
+function refresh(){
+  let done=0,total=0;
+  FUNCTIONS.forEach((f,i)=>{
+    const id='fn'+i;
+    const boxes=document.querySelectorAll(`input[data-fn="${id}"]`);
+    let c=0; boxes.forEach(b=>{ if(b.checked) c++; });
+    total+=boxes.length; done+=c;
+    document.getElementById('cnt-'+id).textContent=c+'/'+boxes.length;
+    const pip=document.getElementById('pip-'+id);
+    pip.className='pip'+(c===boxes.length?' done':c>0?' partial':'');
+  });
+  document.getElementById('pCount').textContent=done;
+  document.getElementById('pTotal').textContent=total;
+  document.getElementById('pBar').style.width=(total?done/total*100:0)+'%';
+}
+
+function refreshPillars(){
+  PILLARS.forEach((p,i)=>{
+    const id='pl'+i;
+    const boxes=document.querySelectorAll(`input[data-pl="${id}"]`);
+    let c=0; boxes.forEach(b=>{ if(b.checked) c++; });
+    const el=document.getElementById('plc-'+id);
+    if(el) el.textContent=c;
+  });
+}
+
+document.querySelectorAll('input[type="checkbox"]').forEach(box=>{
+  if(saved[box.id]) box.checked=true;
+  box.addEventListener('change',()=>{
+    saved[box.id]=box.checked;
+    try{ localStorage.setItem(KEY,JSON.stringify(saved)) }catch(e){}
+    refresh(); refreshPillars();
+  });
+});
+refresh(); refreshPillars();
+
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  if(!confirm('Reset all activity progress in this browser?')) return;
+  saved={}; try{ localStorage.removeItem(KEY) }catch(e){}
+  document.querySelectorAll('input[type="checkbox"]').forEach(b=>b.checked=false);
+  refresh(); refreshPillars();
+});
+
+/* ---------------- THEME ---------------- */
+const root=document.documentElement, tBtn=document.getElementById('themeBtn');
+const tIcon=document.getElementById('themeIcon'), tTxt=document.getElementById('themeTxt');
+function setTheme(t){
+  root.setAttribute('data-theme',t);
+  tTxt.textContent = t==='dark'?'Light':'Dark';
+  tIcon.textContent = t==='dark'?'◐':'◑';
+  try{ localStorage.setItem('galaxsys-hr-theme',t) }catch(e){}
+}
+try{ const st=localStorage.getItem('galaxsys-hr-theme'); if(st) setTheme(st); }catch(e){}
+tBtn.addEventListener('click',()=>setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+
+document.getElementById('stamp').textContent='Saved in this browser · '+new Date().getFullYear();
+</script>
+</body>
+</html>
